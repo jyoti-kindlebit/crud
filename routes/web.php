@@ -17,6 +17,16 @@ Route::get('/', function () {
 
 use App\Post;
 use Illuminate\Http\Request;
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/', function () {
+    return redirect()->intended('register');
+});
+
+Route::group(['middleware' => ['auth']], function() {
+    // your routes
+
 
 Route::get('/posts', 'PostsController@index')->name('posts.index');
 Route::get('/posts/details/{id}', 'PostsController@details')->name('posts.details');
@@ -25,3 +35,8 @@ Route::post('/posts/insert', 'PostsController@insert')->name('posts.insert');
 Route::get('/posts/edit/{id}', 'PostsController@edit')->name('posts.edit');
 Route::post('/posts/update/{id}', 'PostsController@update')->name('posts.update');
 Route::get('/posts/delete/{id}', 'PostsController@delete')->name('posts.delete');
+
+});
+
+
+
